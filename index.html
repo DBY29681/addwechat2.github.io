@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可以联系学长！</title>
+    <style>
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            background-color: #f0f2f5; 
+            text-align: center; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+        }
+        .container { 
+            padding: 20px 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        /* 【问题一 修正】: 只设置宽度，让高度自适应，删除 height: 250px; */
+        img { 
+            max-width: 100%; /* 关键！图片最宽不能超过其容器的100% */
+            max-height: 60vh; /* (可选) 图片最高不超过屏幕高度的60%，防止图片太大占满屏幕 */
+            height: auto; /* 确保高度按比例缩放 */
+            display: block;
+            margin: 0 auto;
+        }
+        p { 
+            color: #555; 
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 16px; 
+            line-height: 1.5; 
+        }
+        /* 【问题三 修正】: 添加按钮样式 */
+        .action-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #07c160; /* 微信绿 */
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .action-button:hover {
+            background-color: #06ad56;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 确保这里的图片文件名和你上传的一致 -->
+        <img src="addWechat.jpg" alt="微信二维码">
+
+        <!-- 【问题二 修正】: 只要文件以 UTF-8 保存，这里就不会乱码 -->
+        <p>请先保存图片并点击下方按钮跳转到微信</p>
+        
+        <!-- 【问题三 修正】: 添加一个按钮来触发跳转 -->
+        <a href="javascript:void(0);" id="open-wechat-btn" class="action-button">
+            点击跳转微信
+        </a>
+    </div>
+
+    <script>
+        // 【问题三 修正】: 绑定点击事件来跳转
+        document.getElementById('open-wechat-btn').addEventListener('click', function() {
+            // 在PC端点击按钮时，可以给个提示
+            const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (!isMobile()) {
+                alert('请在手机上打开此页面，或使用手机微信扫描上方二维码');
+                return;
+            }
+            
+            // 在移动端，执行跳转
+            window.location.href = 'weixin://';
+        });
+    </script>
+</body>
+</html>
